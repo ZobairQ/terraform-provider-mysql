@@ -106,7 +106,7 @@ func CreateUser(d *schema.ResourceData, meta interface{}) error {
 	if authStm != "" {
 		stmtSQL = stmtSQL + authStm
 	} else {
-		stmtSQL = stmtSQL + fmt.Sprintf(" IDENTIFIED BY '%s'", password)
+		stmtSQL = stmtSQL + fmt.Sprintf(" IDENTIFIED BY PASSWORD '%s'", password)
 	}
 
 	requiredVersion, _ := version.NewVersion("5.7.0")
@@ -167,12 +167,12 @@ func UpdateUser(d *schema.ResourceData, meta interface{}) error {
 
 		ver, _ := version.NewVersion("5.7.6")
 		if serverVersion.LessThan(ver) {
-			stmtSQL = fmt.Sprintf("SET PASSWORD FOR '%s'@'%s' = PASSWORD('%s')",
+			stmtSQL = fmt.Sprintf("SET PASSWORD FOR '%s'@'%s' = '%s'",
 				d.Get("user").(string),
 				d.Get("host").(string),
 				newpw.(string))
 		} else {
-			stmtSQL = fmt.Sprintf("ALTER USER '%s'@'%s' IDENTIFIED BY '%s'",
+			stmtSQL = fmt.Sprintf("ALTER USER '%s'@'%s' IDENTIFIED BY PASSWORD'%s'",
 				d.Get("user").(string),
 				d.Get("host").(string),
 				newpw.(string))
