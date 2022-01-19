@@ -12,7 +12,7 @@ Usage
 terraform {
   required_providers {
     mysql = {
-      source  = "winebarrel/mysql"
+      source  = "zobairq/mysql"
       version = "~> 1.10.2"
     }
   }
