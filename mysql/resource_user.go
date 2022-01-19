@@ -38,8 +38,6 @@ func resourceUser() *schema.Resource {
 			"plaintext_password": {
 				Type:      schema.TypeString,
 				Optional:  true,
-				Sensitive: true,
-				StateFunc: hashSum,
 			},
 
 			"password": {
