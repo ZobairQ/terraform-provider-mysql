@@ -170,7 +170,7 @@ func UpdateUser(d *schema.ResourceData, meta interface{}) error {
 				d.Get("host").(string),
 				newpw.(string))
 		} else {
-			stmtSQL = fmt.Sprintf("ALTER USER '%s'@'%s' IDENTIFIED BY PASSWORD'%s'",
+			stmtSQL = fmt.Sprintf("ALTER USER '%s'@'%s' IDENTIFIED WITH 'mysql_native_password' AS'%s'",
 				d.Get("user").(string),
 				d.Get("host").(string),
 				newpw.(string))
