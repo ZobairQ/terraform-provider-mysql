@@ -12,9 +12,9 @@
 name: release
 on:
   push:
-    branches: *
     tags:
       - 'v*'
+  pull_request:
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
