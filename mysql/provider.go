@@ -202,12 +202,17 @@ func quoteIdentifier(in string) string {
 
 func serverVersion(db *sql.DB) (*version.Version, error) {
 	var versionString string
-	err := db.QueryRow("SELECT @@GLOBAL.innodb_version").Scan(&versionString)
+	err := db.QueryRow("SELECT VERSION()").Scan(&versionString)
 	if err != nil {
 		return nil, err
 	}
 
-	return version.NewVersion(versionString)
+	r, err := regexp.Compile("^(\\d+\\.\\d+\\.\\d+)")
+	if err != nil {
+		return nil, err
+	}
+
+	return version.NewVersion(r.FindStringSubmatch(versionString)[1])
 }
 
 func serverVersionString(db *sql.DB) (string, error) {
